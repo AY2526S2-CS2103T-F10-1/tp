@@ -54,8 +54,8 @@ public class RemarkCommand extends Command {
         }
 
         Person personToEdit = lastShownList.get(index.getZeroBased());
-        Person editedPerson = new Person(personToEdit.getName(), personToEdit.getPhone(), personToEdit.getEmail(),
-                personToEdit.getAddress(), remark, personToEdit.getTags());
+        Person editedPerson = new Person(personToEdit.getName(), personToEdit.getPhone(),
+                personToEdit.getEmail(), personToEdit.getAddress(), remark, personToEdit.getTags());
 
         model.setPerson(personToEdit, editedPerson);
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
@@ -86,7 +86,6 @@ public class RemarkCommand extends Command {
 
         // state check
         RemarkCommand e = (RemarkCommand) other;
-        return index.equals(e.index)
-                && remark.equals(e.remark);
+        return index.equals(e.index) && remark.equals(e.remark);
     }
 }
