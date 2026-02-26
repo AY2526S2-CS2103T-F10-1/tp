@@ -47,6 +47,16 @@ You can reach us at the email `doctorwho[at]comp.nus.edu.sg`
 * Role: Developer
 * Responsibilities: Dev Ops + Threading
 
+### Kenneth Ong
+
+<img src="images/kenokk3003.png" width="200px">
+
+[[github](http://github.com/KenOKK3003)]
+[[portfolio](team/KenOKK3003.md)]
+
+* Role: Code Quality Lead
+* Responsibilities: Ensures code quality is met at all stages of coding.
+
 ### Sara Khan 
 
 <img src="images/s6r6k.png" width="200px">
