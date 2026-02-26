@@ -5,19 +5,18 @@ title: About Us
 
 We are a team based in the [School of Computing, National University of Singapore](https://www.comp.nus.edu.sg).
 
-You can reach us at the email `seer[at]comp.nus.edu.sg`
+You can reach us at the email `doctorwho[at]comp.nus.edu.sg`
 
 ## Project team
 
-### John Doe
+### Sebastien Leib
 
-<img src="images/johndoe.png" width="200px">
+<img src="images/alieron.png" width="200px">
 
-[[homepage](http://www.comp.nus.edu.sg/~damithch)]
-[[github](https://github.com/johndoe)]
-[[portfolio](team/johndoe.md)]
+[[github](https://github.com/alieron)]
+[[portfolio](team/alieron.md)]
 
-* Role: Project Advisor
+* Role: Integration + QA
 
 ### Jane Doe
 
@@ -57,3 +56,13 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 
 * Role: Code Quality Lead
 * Responsibilities: Ensures code quality is met at all stages of coding.
+
+### Sara Khan 
+
+<img src="images/s6r6k.png" width="200px">
+
+[[github](http://github.com/s6r6k)]
+[[portfolio](team/s6r6k.md)]
+
+* Role: Developer
+* Responsibilities: Documentation 
