@@ -47,12 +47,12 @@ You can reach us at the email `doctorwho[at]comp.nus.edu.sg`
 * Role: Developer
 * Responsibilities: Dev Ops + Threading
 
-### James Doe
+### Sara Khan 
 
-<img src="images/johndoe.png" width="200px">
+<img src="images/s6r6k.png" width="200px">
 
-[[github](http://github.com/johndoe)]
-[[portfolio](team/johndoe.md)]
+[[github](http://github.com/s6r6k)]
+[[portfolio](team/s6r6k.md)]
 
 * Role: Developer
-* Responsibilities: UI
+* Responsibilities: Documentation 
