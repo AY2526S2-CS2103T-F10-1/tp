@@ -303,6 +303,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 | `*` | Doctor | link related patients | review hereditary patterns |
 | `*` | Doctor | attach external specialist notes | have a full care picture |
 | `*` | Tech Savvy Doctor | chain commands together | add a patient and their first appointment in one line |
+
 ### Use cases
 
 (For all use cases below, the **System** is `DoctorWho` and the **Actor** is the `Doctor`, unless specified otherwise)
