@@ -19,8 +19,8 @@ public class Appointment {
     // Example format: 12-03-2026 1400
     public static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("dd-MM-yyyy HHmm");
 
-    private final LocalDateTime from;
-    private final LocalDateTime to;
+    private LocalDateTime from;
+    private LocalDateTime to;
 
     /**
      * Constructs an {@code Appointment}.
@@ -52,6 +52,23 @@ public class Appointment {
         } catch (DateTimeParseException e) {
             return false;
         }
+    }
+
+    /**
+     * Updates the appointment timing.
+     */
+    public void setDateTime(String fromStr, String toStr) {
+        requireNonNull(fromStr);
+        requireNonNull(toStr);
+        checkArgument(isValidDateTime(fromStr) && isValidDateTime(toStr), MESSAGE_CONSTRAINTS);
+
+        LocalDateTime start = LocalDateTime.parse(fromStr, FORMATTER);
+        LocalDateTime end = LocalDateTime.parse(toStr, FORMATTER);
+
+        checkArgument(start.isBefore(end), "The start time must be before the end time.");
+
+        this.from = start;
+        this.to = end;
     }
 
     /**

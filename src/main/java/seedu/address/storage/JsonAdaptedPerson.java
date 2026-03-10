@@ -11,6 +11,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.Appointment;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
@@ -29,6 +30,8 @@ class JsonAdaptedPerson {
     private final String email;
     private final String address;
     private final List<JsonAdaptedTag> tags = new ArrayList<>();
+    private String appointmentFrom;
+    private String appointmentTo;
 
     /**
      * Constructs a {@code JsonAdaptedPerson} with the given person details.
@@ -36,7 +39,9 @@ class JsonAdaptedPerson {
     @JsonCreator
     public JsonAdaptedPerson(@JsonProperty("name") String name, @JsonProperty("phone") String phone,
             @JsonProperty("email") String email, @JsonProperty("address") String address,
-            @JsonProperty("tags") List<JsonAdaptedTag> tags) {
+            @JsonProperty("tags") List<JsonAdaptedTag> tags,
+            @JsonProperty("appointmentFrom") String appointmentFrom,
+            @JsonProperty("appointmentTo") String appointmentTo) {
         this.name = name;
         this.phone = phone;
         this.email = email;
@@ -44,6 +49,8 @@ class JsonAdaptedPerson {
         if (tags != null) {
             this.tags.addAll(tags);
         }
+        this.appointmentFrom = appointmentFrom;
+        this.appointmentTo = appointmentTo;
     }
 
     /**
@@ -57,6 +64,8 @@ class JsonAdaptedPerson {
         tags.addAll(source.getTags().stream()
                 .map(JsonAdaptedTag::new)
                 .collect(Collectors.toList()));
+        appointmentFrom = source.getAppointment().map(a -> a.getFrom().format(Appointment.FORMATTER)).orElse(null);
+        appointmentTo = source.getAppointment().map(a -> a.getTo().format(Appointment.FORMATTER)).orElse(null);
     }
 
     /**
@@ -102,8 +111,20 @@ class JsonAdaptedPerson {
         }
         final Address modelAddress = new Address(address);
 
+        Appointment modelAppointment = null;
+        if (appointmentFrom != null && appointmentTo != null) {
+            if (!Appointment.isValidDateTime(appointmentFrom) || !Appointment.isValidDateTime(appointmentTo)) {
+                throw new IllegalValueException(Appointment.MESSAGE_CONSTRAINTS);
+            }
+            try {
+                modelAppointment = new Appointment(appointmentFrom, appointmentTo);
+            } catch (IllegalArgumentException e) {
+                throw new IllegalValueException(e.getMessage());
+            }
+        }
+
         final Set<Tag> modelTags = new HashSet<>(personTags);
-        return new Person(modelName, modelPhone, modelEmail, modelAddress, modelTags);
+        return new Person(modelName, modelPhone, modelEmail, modelAddress, modelTags, modelAppointment);
     }
 
 }
