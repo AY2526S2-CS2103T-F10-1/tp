@@ -1,4 +1,4 @@
-package seedu.address.model.person;
+package seedu.address.model.patient;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
@@ -9,7 +9,8 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
  */
 public class MedicalCondition {
 
-    public static final String MESSAGE_CONSTRAINTS = "Medical conditions can take any values, and it should not be blank";
+    public static final String MESSAGE_CONSTRAINTS = "Medical conditions can take any values, and it should not be "
+            + "blank";
 
     /*
      * The first character of the medical condition must not be a whitespace,

@@ -10,7 +10,7 @@ import java.util.Set;
 
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
-import seedu.address.model.person.Person;
+import seedu.address.model.patient.Patient;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -19,16 +19,16 @@ import seedu.address.model.tag.Tag;
 public class PersonUtil {
 
     /**
-     * Returns an add command string for adding the {@code person}.
+     * Returns an add command string for adding the {@code patient}.
      */
-    public static String getAddCommand(Person person) {
+    public static String getAddCommand(Patient person) {
         return AddCommand.COMMAND_WORD + " " + getPersonDetails(person);
     }
 
     /**
-     * Returns the part of command string for the given {@code person}'s details.
+     * Returns the part of command string for the given {@code patient}'s details.
      */
-    public static String getPersonDetails(Person person) {
+    public static String getPersonDetails(Patient person) {
         StringBuilder sb = new StringBuilder();
         sb.append(PREFIX_NAME + person.getName().fullName + " ");
         sb.append(PREFIX_PHONE + person.getPhone().value + " ");
