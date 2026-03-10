@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import seedu.address.model.person.Address;
+import seedu.address.model.person.Appointment;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
@@ -26,6 +27,7 @@ public class PersonBuilder {
     private Email email;
     private Address address;
     private Set<Tag> tags;
+    private Appointment appointment;
 
     /**
      * Creates a {@code PersonBuilder} with the default details.
@@ -36,6 +38,7 @@ public class PersonBuilder {
         email = new Email(DEFAULT_EMAIL);
         address = new Address(DEFAULT_ADDRESS);
         tags = new HashSet<>();
+        appointment = null;
     }
 
     /**
@@ -47,6 +50,7 @@ public class PersonBuilder {
         email = personToCopy.getEmail();
         address = personToCopy.getAddress();
         tags = new HashSet<>(personToCopy.getTags());
+        appointment = personToCopy.getAppointment().orElse(null);
     }
 
     /**
@@ -89,8 +93,24 @@ public class PersonBuilder {
         return this;
     }
 
+    /**
+     * Sets the {@code Appointment} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withAppointment(String from, String to) {
+        this.appointment = new Appointment(from, to);
+        return this;
+    }
+
+    /**
+     * Clears the {@code Appointment} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withNoAppointment() {
+        this.appointment = null;
+        return this;
+    }
+
     public Person build() {
-        return new Person(name, phone, email, address, tags);
+        return new Person(name, phone, email, address, tags, appointment);
     }
 
 }
