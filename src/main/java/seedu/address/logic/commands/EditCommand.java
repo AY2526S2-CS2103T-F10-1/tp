@@ -46,7 +46,9 @@ public class EditCommand extends Command {
             + "[" + PREFIX_PHONE + "PHONE] "
             + "[" + PREFIX_EMAIL + "EMAIL] "
             + "[" + PREFIX_ADDRESS + "ADDRESS] "
-            + "[" + PREFIX_TAG + "TAG]...\n"
+            + "[" + PREFIX_TAG + "TAG]..."
+            + "[" + PREFIX_APPOINTMENT_FROM + "START_TIME] "
+            + "[" + PREFIX_APPOINTMENT_TO + "END_TIME]\n"
             + "Example: " + COMMAND_WORD + " 1 "
             + PREFIX_PHONE + "91234567 "
             + PREFIX_EMAIL + "johndoe@example.com";
@@ -120,7 +122,8 @@ public class EditCommand extends Command {
         Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
 
-        Appointment updatedAppointment = editPersonDescriptor.getAppointment().orElse(personToEdit.getAppointment().orElse(null));
+        Appointment updatedAppointment = editPersonDescriptor.getAppointment()
+                .orElse(personToEdit.getAppointment().orElse(null));
 
         return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTags, updatedAppointment);
     }

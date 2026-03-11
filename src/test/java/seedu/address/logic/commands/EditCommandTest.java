@@ -173,7 +173,8 @@ public class EditCommandTest {
     @Test
     public void execute_appointmentConflict_failure() {
         // 1. Set two typical people with overlapping appointments in the model
-        Person patientA = new PersonBuilder().withName("Alice").withAppointment("15-03-2026 1000", "15-03-2026 1100").build();
+        Person patientA = new PersonBuilder().withName("Alice")
+                .withAppointment("15-03-2026 1000", "15-03-2026 1100").build();
         Person patientB = new PersonBuilder().withName("Bob").withNoAppointment().build();
 
         model.setPerson(model.getFilteredPersonList().get(0), patientA);

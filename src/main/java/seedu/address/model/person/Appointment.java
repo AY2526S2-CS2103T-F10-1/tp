@@ -95,8 +95,12 @@ public class Appointment {
 
     @Override
     public boolean equals(Object other) {
-        if (other == this) return true;
-        if (!(other instanceof Appointment)) return false;
+        if (other == this) {
+            return true;
+        }
+        if (!(other instanceof Appointment)) {
+            return false;
+        }
         Appointment o = (Appointment) other;
         return from.equals(o.from) && to.equals(o.to);
     }

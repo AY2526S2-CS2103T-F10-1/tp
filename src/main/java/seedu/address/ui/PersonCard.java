@@ -58,8 +58,7 @@ public class PersonCard extends UiPart<Region> {
                 .sorted(Comparator.comparing(tag -> tag.tagName))
                 .forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
         person.getAppointment().ifPresentOrElse(
-                appt -> appointment.setText("Next Appointment: " + appt.toString()),
-                () -> {
+                appt -> appointment.setText("Next Appointment: " + appt.toString()), () -> {
                     appointment.setText("No appointment scheduled");
                     appointment.setStyle("-fx-text-fill: #999999; -fx-font-style: italic;");
                 }
