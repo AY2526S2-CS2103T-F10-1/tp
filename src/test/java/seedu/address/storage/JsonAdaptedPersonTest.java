@@ -124,12 +124,25 @@ public class JsonAdaptedPersonTest {
     }
 
     @Test
+    public void toModelType_validAppointmentDetails_returnsPerson() throws Exception {
+        JsonAdaptedPerson person = new JsonAdaptedPerson(BENSON);
+        assertEquals(BENSON, person.toModelType());
+    }
+
+    @Test
     public void toModelType_invalidAppointmentFormat_throwsIllegalValueException() {
         JsonAdaptedPerson person =
                 new JsonAdaptedPerson(VALID_NAME, VALID_PHONE, VALID_EMAIL, VALID_ADDRESS,
                         VALID_TAGS, INVALID_APPT_FORMAT, VALID_APPT_TO);
         String expectedMessage = Appointment.MESSAGE_CONSTRAINTS;
         assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
+
+        JsonAdaptedPerson personWithSlashes = new JsonAdaptedPerson(
+                VALID_NAME, VALID_PHONE, VALID_EMAIL, VALID_ADDRESS, VALID_TAGS,
+                "2026/03/12 1400", "2026/03/12 1500");
+
+        String expectedMessageWithSlashes = Appointment.MESSAGE_CONSTRAINTS;
+        assertThrows(IllegalValueException.class, expectedMessageWithSlashes, personWithSlashes::toModelType);
     }
 
     @Test

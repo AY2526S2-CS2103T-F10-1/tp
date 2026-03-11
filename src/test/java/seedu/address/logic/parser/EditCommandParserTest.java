@@ -205,4 +205,24 @@ public class EditCommandParserTest {
 
         assertParseSuccess(parser, userInput, expectedCommand);
     }
+
+    @Test
+    public void parse_appointmentFieldSpecified_success() {
+        Index targetIndex = INDEX_FIRST_PERSON;
+        String userInput = targetIndex.getOneBased() + " af/12-03-2026 1400 at/12-03-2026 1500";
+
+        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder()
+                .withAppointment("12-03-2026 1400", "12-03-2026 1500").build();
+        EditCommand expectedCommand = new EditCommand(targetIndex, descriptor);
+
+        assertParseSuccess(parser, userInput, expectedCommand);
+    }
+
+    @Test
+    public void parse_invalidAppointmentRange_failure() {
+        String expectedMessage = "Editing an appointment requires both a start (af/) and an end (at/) time.";
+
+        assertParseFailure(parser, "1 af/12-03-2026 1400", expectedMessage);
+        assertParseFailure(parser, "1 at/12-03-2026 1500", expectedMessage);
+    }
 }
