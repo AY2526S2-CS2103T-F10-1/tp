@@ -24,6 +24,7 @@ import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.person.Appointment;
 import seedu.address.model.person.Person;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
 import seedu.address.testutil.PersonBuilder;
@@ -144,6 +145,47 @@ public class EditCommandTest {
                 new EditPersonDescriptorBuilder().withName(VALID_NAME_BOB).build());
 
         assertCommandFailure(editCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+    }
+
+    @Test
+    public void execute_editAppointmentOnly_success() {
+        // 1. Pick the first person from your typical list (e.g., ALICE)
+        Person personToEdit = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+
+        // 2. Create a descriptor and manually set the appointment
+        EditPersonDescriptor descriptor = new EditPersonDescriptor();
+        descriptor.setAppointment(new Appointment("10-03-2026 1400", "10-03-2026 1500"));
+
+        EditCommand editCommand = new EditCommand(INDEX_FIRST_PERSON, descriptor);
+
+        // 3. Create the expected person using the builder
+        Person editedPerson = new PersonBuilder(personToEdit)
+                .withAppointment("10-03-2026 1400", "10-03-2026 1500").build();
+
+        String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_PERSON_SUCCESS, Messages.format(editedPerson));
+
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
+        expectedModel.setPerson(personToEdit, editedPerson);
+
+        assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
+    }
+
+    @Test
+    public void execute_appointmentConflict_failure() {
+        // 1. Set two typical people with overlapping appointments in the model
+        Person patientA = new PersonBuilder().withName("Alice").withAppointment("15-03-2026 1000", "15-03-2026 1100").build();
+        Person patientB = new PersonBuilder().withName("Bob").withNoAppointment().build();
+
+        model.setPerson(model.getFilteredPersonList().get(0), patientA);
+        model.setPerson(model.getFilteredPersonList().get(1), patientB);
+
+        // 2. Try to edit Bob (Index 2) to clash with Alice
+        EditPersonDescriptor descriptor = new EditPersonDescriptor();
+        descriptor.setAppointment(new Appointment("15-03-2026 1030", "15-03-2026 1130"));
+
+        EditCommand editCommand = new EditCommand(INDEX_SECOND_PERSON, descriptor);
+
+        assertCommandFailure(editCommand, model, EditCommand.MESSAGE_APPOINTMENT_CONFLICT);
     }
 
     @Test
