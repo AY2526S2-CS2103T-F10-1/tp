@@ -1,6 +1,8 @@
 package seedu.address.testutil;
 
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_APPOINTMENT_FROM;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_APPOINTMENT_TO;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
@@ -37,6 +39,10 @@ public class PersonUtil {
         person.getTags().stream().forEach(
             s -> sb.append(PREFIX_TAG + s.tagName + " ")
         );
+        person.getAppointment().ifPresent(appointment -> {
+            sb.append(PREFIX_APPOINTMENT_FROM).append(appointment.getFormattedStart()).append(" ");
+            sb.append(PREFIX_APPOINTMENT_TO).append(appointment.getFormattedEnd()).append(" ");
+        });
         return sb.toString();
     }
 
@@ -57,6 +63,10 @@ public class PersonUtil {
                 tags.forEach(s -> sb.append(PREFIX_TAG).append(s.tagName).append(" "));
             }
         }
+        descriptor.getAppointment().ifPresent(appointment -> {
+            sb.append(PREFIX_APPOINTMENT_FROM).append(appointment.getFormattedStart()).append(" ");
+            sb.append(PREFIX_APPOINTMENT_TO).append(appointment.getFormattedEnd()).append(" ");
+        });
         return sb.toString();
     }
 }

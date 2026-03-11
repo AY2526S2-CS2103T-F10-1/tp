@@ -88,6 +88,20 @@ public class Appointment {
         return to;
     }
 
+    /**
+     * Returns the start time formatted for CLI input.
+     */
+    public String getFormattedStart() {
+        return from.format(FORMATTER);
+    }
+
+    /**
+     * Returns the end time formatted for CLI input.
+     */
+    public String getFormattedEnd() {
+        return to.format(FORMATTER);
+    }
+
     @Override
     public String toString() {
         return String.format("%s to %s", from.format(FORMATTER), to.format(FORMATTER));

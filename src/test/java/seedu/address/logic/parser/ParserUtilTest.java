@@ -15,6 +15,7 @@ import org.junit.jupiter.api.Test;
 
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.Appointment;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
@@ -192,5 +193,21 @@ public class ParserUtilTest {
         Set<Tag> expectedTagSet = new HashSet<Tag>(Arrays.asList(new Tag(VALID_TAG_1), new Tag(VALID_TAG_2)));
 
         assertEquals(expectedTagSet, actualTagSet);
+    }
+
+    @Test
+    public void parseAppointment_validValue_returnsAppointment() throws Exception {
+        String from = "12-03-2026 1400";
+        String to = "12-03-2026 1500";
+        Appointment expectedAppointment = new Appointment(from, to);
+        assertEquals(expectedAppointment, ParserUtil.parseAppointment(from, to));
+    }
+
+    @Test
+    public void parseAppointment_invalidValue_throwsParseException() {
+        // Testing invalid date format
+        assertThrows(ParseException.class, () -> ParserUtil.parseAppointment("invalid", "12-03-2026 1500"));
+        // Testing logic where end is before start
+        assertThrows(ParseException.class, () -> ParserUtil.parseAppointment("12-03-2026 1500", "12-03-2026 1400"));
     }
 }

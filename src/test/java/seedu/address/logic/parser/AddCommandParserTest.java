@@ -3,6 +3,8 @@ package seedu.address.logic.parser;
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.commands.CommandTestUtil.ADDRESS_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.ADDRESS_DESC_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.APPOINTMENT_FROM_DESC_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.APPOINTMENT_TO_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.EMAIL_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.EMAIL_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_ADDRESS_DESC;
@@ -54,15 +56,25 @@ public class AddCommandParserTest {
 
         // whitespace only preamble
         assertParseSuccess(parser, PREAMBLE_WHITESPACE + NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
-                + ADDRESS_DESC_BOB + TAG_DESC_FRIEND, new AddCommand(expectedPerson));
+                + ADDRESS_DESC_BOB + TAG_DESC_FRIEND
+                + APPOINTMENT_TO_DESC_BOB + APPOINTMENT_FROM_DESC_BOB, new AddCommand(expectedPerson));
 
 
         // multiple tags - all accepted
         Person expectedPersonMultipleTags = new PersonBuilder(BOB).withTags(VALID_TAG_FRIEND, VALID_TAG_HUSBAND)
                 .build();
         assertParseSuccess(parser,
-                NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB + ADDRESS_DESC_BOB + TAG_DESC_HUSBAND + TAG_DESC_FRIEND,
+                NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB + ADDRESS_DESC_BOB
+                        + TAG_DESC_HUSBAND + TAG_DESC_FRIEND + APPOINTMENT_TO_DESC_BOB + APPOINTMENT_FROM_DESC_BOB,
                 new AddCommand(expectedPersonMultipleTags));
+
+        Person expectedPersonWithAppointment = new PersonBuilder(AMY)
+                .withAppointment("12-03-2026 1400", "12-03-2026 1500")
+                .build();
+
+        assertParseSuccess(parser, NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY
+                        + ADDRESS_DESC_AMY + TAG_DESC_FRIEND + " af/12-03-2026 1400 at/12-03-2026 1500",
+                new AddCommand(expectedPersonWithAppointment));
     }
 
     @Test
@@ -132,7 +144,11 @@ public class AddCommandParserTest {
     @Test
     public void parse_optionalFieldsMissing_success() {
         // zero tags
-        Person expectedPerson = new PersonBuilder(AMY).withTags().build();
+        Person expectedPerson = new PersonBuilder(AMY)
+                .withTags()
+                .withNoAppointment()
+                .build();
+
         assertParseSuccess(parser, NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY,
                 new AddCommand(expectedPerson));
     }
@@ -192,5 +208,25 @@ public class AddCommandParserTest {
         assertParseFailure(parser, PREAMBLE_NON_EMPTY + NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
                 + ADDRESS_DESC_BOB + TAG_DESC_HUSBAND + TAG_DESC_FRIEND,
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
+    }
+
+    @Test
+    public void parse_missingAppointmentTo_failure() {
+        String expectedMessage = "Appointments require both a start (af/) and an end (at/) time.";
+
+        // Test with ONLY 'af/' (covers line 62 and 64)
+        assertParseFailure(parser, NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY
+                        + ADDRESS_DESC_AMY + " af/12-03-2026 1400",
+                expectedMessage);
+    }
+
+    @Test
+    public void parse_missingAppointmentFrom_failure() {
+        String expectedMessage = "Appointments require both a start (af/) and an end (at/) time.";
+
+        // Test with ONLY 'at/' (covers line 63 and 64)
+        assertParseFailure(parser, NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY
+                        + ADDRESS_DESC_AMY + " at/12-03-2026 1500",
+                expectedMessage);
     }
 }
