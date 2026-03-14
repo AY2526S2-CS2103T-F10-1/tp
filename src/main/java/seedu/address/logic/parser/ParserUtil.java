@@ -13,6 +13,9 @@ import seedu.address.model.patient.Address;
 import seedu.address.model.patient.Email;
 import seedu.address.model.patient.Name;
 import seedu.address.model.patient.Phone;
+import seedu.address.model.tag.Allergy;
+import seedu.address.model.tag.GeneralTag;
+import seedu.address.model.tag.MedicalCondition;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -110,7 +113,37 @@ public class ParserUtil {
         if (!Tag.isValidTagName(trimmedTag)) {
             throw new ParseException(Tag.MESSAGE_CONSTRAINTS);
         }
-        return new Tag(trimmedTag);
+        return new GeneralTag(trimmedTag);
+    }
+
+    /**
+     * Parses a {@code String allergy} into an {@code Allergy}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code allergy} is invalid.
+     */
+    public static Allergy parseAllergy(String allergy) throws ParseException {
+        requireNonNull(allergy);
+        String trimmedTag = allergy.trim();
+        if (!Tag.isValidTagName(trimmedTag)) {
+            throw new ParseException(Tag.MESSAGE_CONSTRAINTS);
+        }
+        return new Allergy(trimmedTag);
+    }
+
+    /**
+     * Parses a {@code String condition} into a {@code MedicalCondition}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code condition} is invalid.
+     */
+    public static MedicalCondition parseMedicalCondition(String condition) throws ParseException {
+        requireNonNull(condition);
+        String trimmedTag = condition.trim();
+        if (!Tag.isValidTagName(trimmedTag)) {
+            throw new ParseException(Tag.MESSAGE_CONSTRAINTS);
+        }
+        return new MedicalCondition(trimmedTag);
     }
 
     /**

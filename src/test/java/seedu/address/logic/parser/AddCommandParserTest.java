@@ -25,7 +25,9 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_ALLERGY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_MEDICALCONDITION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
@@ -46,6 +48,8 @@ import seedu.address.model.tag.Tag;
 import seedu.address.testutil.PatientBuilder;
 
 public class AddCommandParserTest {
+    private static final String ALLERGY_DESC_PEANUT = " " + PREFIX_ALLERGY + "Peanut";
+    private static final String CONDITION_DESC_ASTHMA = " " + PREFIX_MEDICALCONDITION + "Asthma";
     private AddCommandParser parser = new AddCommandParser();
 
     @Test
@@ -63,6 +67,16 @@ public class AddCommandParserTest {
         assertParseSuccess(parser,
                 NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB + ADDRESS_DESC_BOB + TAG_DESC_HUSBAND + TAG_DESC_FRIEND,
                 new AddCommand(expectedPatientMultipleTags));
+
+        // allergy and medical condition
+        Patient expectedPatientWithMedical = new PatientBuilder(BOB)
+                .withTags(VALID_TAG_FRIEND, "Peanut", "Asthma")
+                .build();
+
+        assertParseSuccess(parser,
+                NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB + ADDRESS_DESC_BOB
+                        + TAG_DESC_FRIEND + ALLERGY_DESC_PEANUT + CONDITION_DESC_ASTHMA,
+                new AddCommand(expectedPatientWithMedical));
     }
 
     @Test
@@ -192,5 +206,13 @@ public class AddCommandParserTest {
         assertParseFailure(parser, PREAMBLE_NON_EMPTY + NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
                 + ADDRESS_DESC_BOB + TAG_DESC_HUSBAND + TAG_DESC_FRIEND,
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
+
+        // invalid allergy
+        assertParseFailure(parser, NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB + ADDRESS_DESC_BOB
+                + " al/!!!", Tag.MESSAGE_CONSTRAINTS);
+
+        // invalid medical condition
+        assertParseFailure(parser, NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB + ADDRESS_DESC_BOB
+                + " mc/!!!", Tag.MESSAGE_CONSTRAINTS);
     }
 }
