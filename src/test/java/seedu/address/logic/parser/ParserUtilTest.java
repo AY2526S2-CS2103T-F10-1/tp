@@ -18,7 +18,9 @@ import seedu.address.model.patient.Address;
 import seedu.address.model.patient.Email;
 import seedu.address.model.patient.Name;
 import seedu.address.model.patient.Phone;
+import seedu.address.model.tag.Allergy;
 import seedu.address.model.tag.GeneralTag;
+import seedu.address.model.tag.MedicalCondition;
 import seedu.address.model.tag.Tag;
 
 public class ParserUtilTest {
@@ -194,5 +196,27 @@ public class ParserUtilTest {
                 new GeneralTag(VALID_TAG_1), new GeneralTag(VALID_TAG_2)));
 
         assertEquals(expectedTagSet, actualTagSet);
+    }
+
+    @Test
+    public void parseAllergy_validTag_returnsAllergy() throws ParseException {
+        Allergy allergy = ParserUtil.parseAllergy("Peanut");
+        assertEquals("[Peanut]", allergy.toString());
+    }
+
+    @Test
+    public void parseAllergy_invalidTag_throwsParseException() {
+        assertThrows(ParseException.class, () -> ParserUtil.parseAllergy("!!!"));
+    }
+
+    @Test
+    public void parseMedicalCondition_validTag_returnsCondition() throws ParseException {
+        MedicalCondition condition = ParserUtil.parseMedicalCondition("Asthma");
+        assertEquals("[Asthma]", condition.toString());
+    }
+
+    @Test
+    public void parseMedicalCondition_invalidTag_throwsParseException() {
+        assertThrows(ParseException.class, () -> ParserUtil.parseMedicalCondition("!!!"));
     }
 }

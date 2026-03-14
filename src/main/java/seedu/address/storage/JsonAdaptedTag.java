@@ -4,7 +4,9 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.model.tag.Allergy;
 import seedu.address.model.tag.GeneralTag;
+import seedu.address.model.tag.MedicalCondition;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -13,6 +15,7 @@ import seedu.address.model.tag.Tag;
 class JsonAdaptedTag {
 
     private final String tagName;
+    private final String tagType;
 
     /**
      * Constructs a {@code JsonAdaptedTag} with the given {@code tagName}.
@@ -20,6 +23,7 @@ class JsonAdaptedTag {
     @JsonCreator
     public JsonAdaptedTag(String tagName) {
         this.tagName = tagName;
+        this.tagType = "general";
     }
 
     /**
@@ -27,6 +31,14 @@ class JsonAdaptedTag {
      */
     public JsonAdaptedTag(Tag source) {
         tagName = source.tagName;
+
+        if (source instanceof Allergy) {
+            tagType = "allergy";
+        } else if (source instanceof MedicalCondition) {
+            tagType = "condition";
+        } else {
+            tagType = "general";
+        }
     }
 
     @JsonValue
@@ -43,7 +55,14 @@ class JsonAdaptedTag {
         if (!Tag.isValidTagName(tagName)) {
             throw new IllegalValueException(Tag.MESSAGE_CONSTRAINTS);
         }
-        return new GeneralTag(tagName);
-    }
 
+        switch (tagType) {
+        case "allergy":
+            return new Allergy(tagName);
+        case "condition":
+            return new MedicalCondition(tagName);
+        default:
+            return new GeneralTag(tagName);
+        }
+    }
 }
