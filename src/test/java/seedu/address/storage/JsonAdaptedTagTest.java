@@ -55,4 +55,25 @@ public class JsonAdaptedTagTest {
         assertEquals(Allergy.class, result.getClass());
     }
 
+    @Test
+    public void toJson_medicalConditionTag_returnsConditionPrefix() throws Exception {
+        Tag condition = new MedicalCondition("asthma");
+        JsonAdaptedTag adaptedTag = new JsonAdaptedTag(condition);
+        assertEquals("condition:asthma", adaptedTag.toJson());
+    }
+
+    @Test
+    public void toJson_allergyTag_returnsAllergyPrefix() throws Exception {
+        Tag allergy = new Allergy("peanut");
+        JsonAdaptedTag adaptedTag = new JsonAdaptedTag(allergy);
+        assertEquals("allergy:peanut", adaptedTag.toJson());
+    }
+
+    @Test
+    public void toJson_generalTag_returnsNameOnly() throws Exception {
+        Tag general = new GeneralTag("friends");
+        JsonAdaptedTag adaptedTag = new JsonAdaptedTag(general);
+        assertEquals("friends", adaptedTag.toJson());
+    }
+
 }
