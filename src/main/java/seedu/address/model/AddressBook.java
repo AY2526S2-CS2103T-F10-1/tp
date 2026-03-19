@@ -11,7 +11,7 @@ import seedu.address.model.patient.UniquePersonList;
 
 /**
  * Wraps all data at the address-book level
- * Duplicates are not allowed (by .isSamePerson comparison)
+ * Duplicates are not allowed (by .isSamePatient comparison)
  */
 public class AddressBook implements ReadOnlyAddressBook {
 
@@ -31,7 +31,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     public AddressBook() {}
 
     /**
-     * Creates an AddressBook using the Persons in the {@code toBeCopied}
+     * Creates an AddressBook using the Patients in the {@code toBeCopied}
      */
     public AddressBook(ReadOnlyAddressBook toBeCopied) {
         this();
@@ -41,8 +41,8 @@ public class AddressBook implements ReadOnlyAddressBook {
     //// list overwrite operations
 
     /**
-     * Replaces the contents of the patient list with {@code persons}.
-     * {@code persons} must not contain duplicate persons.
+     * Replaces the contents of the patient list with {@code patients}.
+     * {@code patients} must not contain duplicate patients.
      */
     public void setPersons(List<Patient> patients) {
         this.persons.setPersons(patients);
@@ -76,9 +76,9 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     /**
-     * Replaces the given patient {@code target} in the list with {@code editedPerson}.
+     * Replaces the given patient {@code target} in the list with {@code editedPatient}.
      * {@code target} must exist in the address book.
-     * The patient identity of {@code editedPerson} must not be the same as another existing patient in the address
+     * The patient identity of {@code editedPatient} must not be the same as another existing patient in the address
      * book.
      */
     public void setPerson(Patient target, Patient editedPatient) {

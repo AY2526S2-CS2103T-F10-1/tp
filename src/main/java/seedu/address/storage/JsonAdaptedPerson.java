@@ -35,7 +35,7 @@ class JsonAdaptedPerson {
     private final String appointmentNote;
 
     /**
-     * Constructs a {@code JsonAdaptedPerson} with the given patient details.
+     * Constructs a {@code JsonAdaptedPerson} with the given patients details.
      */
     @JsonCreator
     public JsonAdaptedPerson(@JsonProperty("name") String name, @JsonProperty("phone") String phone,
@@ -57,7 +57,7 @@ class JsonAdaptedPerson {
     }
 
     /**
-     * Converts a given {@code Person} into this class for Jackson use.
+     * Converts a given {@code Patient} into this class for Jackson use.
      */
     public JsonAdaptedPerson(Patient source) {
         name = source.getName().fullName;
@@ -77,7 +77,7 @@ class JsonAdaptedPerson {
     }
 
     /**
-     * Converts this Jackson-friendly adapted patient object into the model's {@code Person} object.
+     * Converts this Jackson-friendly adapted patient object into the model's {@code Patient} object.
      *
      * @throws IllegalValueException if there were any data constraints violated in the adapted patient.
      */

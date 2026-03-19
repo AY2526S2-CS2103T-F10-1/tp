@@ -13,7 +13,7 @@ import seedu.address.model.patient.Phone;
 import seedu.address.model.tag.Tag;
 
 /**
- * A utility class to help with building EditPersonDescriptor objects.
+ * A utility class to help with building EditPatientDescriptor objects.
  */
 public class EditPersonDescriptorBuilder {
 
@@ -28,7 +28,7 @@ public class EditPersonDescriptorBuilder {
     }
 
     /**
-     * Returns an {@code EditPersonDescriptor} with fields containing {@code patient}'s details
+     * Returns an {@code EditPatientDescriptor} with fields containing {@code patient}'s details
      */
     public EditPersonDescriptorBuilder(Patient patient) {
         descriptor = new EditPersonDescriptor();
