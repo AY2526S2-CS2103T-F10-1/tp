@@ -3,7 +3,7 @@ layout: page
 title: User Guide
 ---
 
-DoctorWho is designed for clinic receptionists and administrative staff at small to mid-sized General Practitioners (GP) clinics. 
+DoctorWho is designed for clinic receptionists and administrative staff at small to mid-sized General Practitioners (GP) clinics.
 This guide assumes you are comfortable using a computer for everyday tasks, but no programming or technical experience is required.
 
 Do you prefer typing information to having to click on multiple things? DoctorWho is for you!
@@ -64,7 +64,7 @@ Don't worry if you're not tech-savvy — just follow these steps one by one and 
 6. Type a command in the command box at the top and press **Enter** to run it. Here are a few to try out:
 
    * `list` — Lists all patients.
-   * `add n/John Doe ic/S1234567D x/M dob/01-04-2003 p/98765432 e/johnd@example.com a/John street, block 123, #01-01` — Adds a patient named `John Doe`.
+   * `add n/John Doe ic/S6272333E x/M dob/01-04-2003 p/98765432 e/johnd@example.com a/John street, block 123, #01-01` — Adds a patient named `John Doe`.
    * `delete 3` — Deletes the 3rd patient in the current list.
    * `apt 3 d/01-04-2026 09:00 dur/60 note/Follow-up for diabetes review` — Schedules an appointment for the 3rd patient.
    * `lsapt d/12-03-2026` — List appointments for 12th March 2026.
@@ -81,7 +81,7 @@ can be found in [Features](#features).
 
 | Action                                                   | Format, Examples                                                                                                                                                                                                                                       |
 |----------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| [**Add**](#adding-a-patient-add)                         | `add n/NAME ic/NRIC x/SEX dob/DOB p/PHONE_NUMBER e/EMAIL a/ADDRESS [al/ALLERGY] [mc/CONDITION]…​` <br> e.g., `add n/James Ho ic/S1234567D x/M dob/01-04-2003 p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 al/dust c/allergic rhinitis` |
+| [**Add**](#adding-a-patient-add)                         | `add n/NAME ic/NRIC x/SEX dob/DOB p/PHONE_NUMBER e/EMAIL a/ADDRESS [al/ALLERGY] [mc/CONDITION]…​` <br> e.g., `add n/James Ho ic/T8500846Z x/M dob/01-04-2003 p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 al/dust c/allergic rhinitis` |
 | [**List**](#listing-all-patients-list)                   | `list`                                                                                                                                                                                                                                                 |
 | [**Edit**](#editing-a-patient-edit)                      | `edit PATIENT_NUMBER [n/NAME] [ic/NRIC] [x/SEX] [dob/DOB] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [al/ALLERGY] [mc/CONDITION]…​`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`                                                                   |
 | [**Find**](#locating-patients-by-name-find)              | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`                                                                                                                                                                                             |
@@ -189,9 +189,9 @@ A patient can have any number of allergies or medical conditions (including 0)
 
 Examples:
 
-* `add n/John Doe ic/S1234567D x/M dob/01-04-2003 p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
-* `add n/Betsy Crowe ic/S2345678H x/F dob/02-04-2003 e/bcrowe@example.com a/Newgate Prison p/1234567 al/Penicillin mc/cold`
-* `add n/Tim Chal ic/S4567890C x/M dob/03-04-2003 e/betsycrowe@example.com a/Newgate Prison p/1234567 al/Morphine`
+* `add n/John Doe ic/S7796906C x/M dob/01-04-2003 p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
+* `add n/Betsy Crowe ic/S5145909A x/F dob/02-04-2003 e/bcrowe@example.com a/Newgate Prison p/1234567 al/Penicillin mc/cold`
+* `add n/Tim Chal ic/T3783153G x/M dob/03-04-2003 e/betsycrowe@example.com a/Newgate Prison p/1234567 al/Morphine`
 
 ### Listing all patients: `list`
 
@@ -234,8 +234,8 @@ Format: `find KEYWORD [MORE_KEYWORDS]`
   e.g., `Hans Bo` will return `Hans Gruber`, `Bo Yang`
 
 <div markdown="span" class="alert alert-primary">:bulb: **Tip:**
-Use `find` before `delete` or `edit` to locate the right patient 
-first. This reduces the risk of accidentally modifying the wrong 
+Use `find` before `delete` or `edit` to locate the right patient
+first. This reduces the risk of accidentally modifying the wrong
 patient's records.
 </div>
 
@@ -255,8 +255,8 @@ Format: `delete PATIENT_NUMBER`
 * The PATIENT_NUMBER **must be a positive integer** 1, 2, 3, …​
 
 <div markdown="span" class="alert alert-warning">:exclamation: **Caution:**
-This action is irreversible. Once a patient is deleted, all their 
-information and appointments cannot be recovered. Use `find` first 
+This action is irreversible. Once a patient is deleted, all their
+information and appointments cannot be recovered. Use `find` first
 to confirm you have the right patient before deleting.
 </div>
 
@@ -279,8 +279,8 @@ Format: `apt PATIENT_NUMBER d/DATETIME dur/DURATION [note/NOTE]`
 * If provided, `NOTE` must be at most **500 characters**.
 
 <div markdown="span" class="alert alert-warning">:exclamation: **Caution:**
-If the patient already has an existing appointment, it will be 
-silently overwritten with no confirmation prompt. Check the 
+If the patient already has an existing appointment, it will be
+silently overwritten with no confirmation prompt. Check the
 patient's current appointment before using this command.
 </div>
 
@@ -317,8 +317,8 @@ Format: `lsapt [d/DATE]`
 * `DATE` must be in the format `dd-MM-yyyy` e.g., `14-03-2026` refers to 14th March 2026.
 
 <div markdown="span" class="alert alert-primary">:bulb: **Tip:**
-Run `lsapt d/TODAY'S DATE` at the start of your shift to get a 
-quick overview of all appointments for the day, sorted from 
+Run `lsapt d/TODAY'S DATE` at the start of your shift to get a
+quick overview of all appointments for the day, sorted from
 earliest to latest.
 </div>
 
