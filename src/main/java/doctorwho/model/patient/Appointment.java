@@ -7,6 +7,7 @@ import static java.util.Objects.requireNonNull;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.time.format.ResolverStyle;
 import java.util.Objects;
 
 /**
@@ -16,16 +17,17 @@ import java.util.Objects;
 public class Appointment {
 
     public static final String STARTTIME_CONSTRAINTS =
-            "Appointments should have a start time in 'dd-MM-yyyy HH:mm' format";
+            "Appointments should be a valid date and have a start time in 'dd-MM-yyyy HH:mm' format";
 
     public static final String DURATION_CONSTRAINTS =
             "Appointments should have a finite positive integer for duration (minutes).";
 
     public static final String NOTE_CONSTRAINTS =
-            "Appointments should have a start time in 'dd-MM-yyyy HH:mm' format, "
+            STARTTIME_CONSTRAINTS + ", "
                     + "a positive integer for duration (minutes), and a note.";
 
-    public static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
+    public static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("dd-MM-uuuu HH:mm")
+            .withResolverStyle(ResolverStyle.STRICT);
 
     public static final String VALIDATION_REGEX = "[^\\x00-\\x1F]*";
     public static final int MAX_LENGTH = 500;
@@ -56,6 +58,9 @@ public class Appointment {
      * Returns true if a given string is in the correct date-time format.
      */
     public static boolean isValidDateTime(String test) {
+        if (!test.matches("\\d{2}-\\d{2}-\\d{4} \\d{2}:\\d{2}")) {
+            return false;
+        }
         try {
             LocalDateTime.parse(test, FORMATTER);
             return true;

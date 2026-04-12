@@ -21,15 +21,49 @@ public class AppointmentTest {
     }
 
     @Test
-    public void constructor_invalidDateTime_throwsIllegalArgumentException() {
-        String invalidStart = "2026/03/12 14:00"; // Wrong format
-        assertThrows(IllegalArgumentException.class, () -> new Appointment(invalidStart, VALID_DURATION, VALID_NOTE));
+    public void constructor_invalidDateTimeFormat_throwsIllegalArgumentException() {
+        assertThrows(IllegalArgumentException.class, () -> new Appointment(
+                "2026/03/12 14:00", VALID_DURATION, VALID_NOTE)); // wrong separator amd order
+        assertThrows(IllegalArgumentException.class, () -> new Appointment(
+                "1-1-2024 09:00", VALID_DURATION, VALID_NOTE)); // missing leading 0s
+        assertThrows(IllegalArgumentException.class, () -> new Appointment(
+                "01/01/2024 09:00", VALID_DURATION, VALID_NOTE)); // wrong separator
+        assertThrows(IllegalArgumentException.class, () -> new Appointment(
+                "01-01-2024", VALID_DURATION, VALID_NOTE)); // missing time
     }
 
     @Test
     public void constructor_invalidDuration_throwsIllegalArgumentException() {
         assertThrows(IllegalArgumentException.class, () -> new Appointment(VALID_START, 0, VALID_NOTE));
         assertThrows(IllegalArgumentException.class, () -> new Appointment(VALID_START, -10, VALID_NOTE));
+    }
+
+
+    @Test
+    void isValidDateTime_invalidCalendarDate_returnsFalse() {
+        assertFalse(Appointment.isValidDateTime("31-02-2024 10:00")); // Feb 31
+        assertFalse(Appointment.isValidDateTime("29-02-2023 10:00")); // not leap year
+    }
+
+    @Test
+    void isValidDateTime_validLeapYear_returnsTrue() {
+        assertTrue(Appointment.isValidDateTime("29-02-2024 10:00")); // valid leap year
+    }
+
+    @Test
+    void isValidDateTime_invalidTimeBounds_returnsFalse() {
+        assertFalse(Appointment.isValidDateTime("01-01-2024 24:00")); // invalid hour
+        assertFalse(Appointment.isValidDateTime("01-01-2024 23:60")); // invalid minute
+    }
+
+    @Test
+    void isValidDateTime_bceYear_returnsFalse() {
+        assertFalse(Appointment.isValidDateTime("01-01--0001 00:00")); // allowed by uuuu
+    }
+
+    @Test
+    void isValidDateTime_yearZeroEdgeCase_returnsTrue() {
+        assertTrue(Appointment.isValidDateTime("01-01-0000 00:00")); // allowed by uuuu
     }
 
     @Test

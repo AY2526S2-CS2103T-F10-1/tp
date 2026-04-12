@@ -6,7 +6,7 @@ package doctorwho.model.tag;
 public class Condition extends Tag {
 
     public static final String MESSAGE_CONSTRAINTS =
-        "Condition names should be alphanumeric, hyphens/spaces allowed, max 50 characters";
+        "Condition names should be alphanumeric, non-consecutive hyphens/spaces allowed, max 50 characters";
 
     private static final String VALIDATION_REGEX =
         "^(?=.{1,50}$)\\p{Alnum}+(-\\p{Alnum}+)*([ ]\\p{Alnum}+(-\\p{Alnum}+)*)*$";

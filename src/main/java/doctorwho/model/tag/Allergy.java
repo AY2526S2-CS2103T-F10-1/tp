@@ -6,7 +6,7 @@ package doctorwho.model.tag;
 public class Allergy extends Tag {
 
     public static final String MESSAGE_CONSTRAINTS =
-        "Allergy names should be alphanumeric, hyphens/spaces allowed, max 30 characters";
+        "Allergy names should be alphanumeric, non-consecutive hyphens/spaces allowed, max 30 characters";
     private static final String VALIDATION_REGEX =
         "^(?=.{1,30}$)\\p{Alnum}+(-\\p{Alnum}+)*([ ]\\p{Alnum}+(-\\p{Alnum}+)*)*$";
 
