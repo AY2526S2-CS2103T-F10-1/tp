@@ -190,7 +190,6 @@ Format: `find KEYWORD [MORE_KEYWORDS]…​`
 * Only full words will be matched _e.g.,_ `Han` will not match `Hans`
 * Patients matching at least one keyword will be returned (_i.e.,_ OR search).
   _e.g.,_ `Hans Bo` will return `Hans Gruber`, `Bo Yang`
-* Refer to [`find` command parameters](#name-params)
 
 <div markdown="span" class="alert alert-primary">:bulb: **Tip:**
 Use `find` before `delete` or `edit` to locate the right patient 
@@ -235,15 +234,12 @@ Format: `apt PATIENT_NUMBER d/DATETIME dur/DURATION [note/NOTE]`
 * The date and time must be in the format `dd-MM-yyyy HH:mm` _e.g.,_ `12-03-2026 14:00` refers to 12th March 2026, 14:00.
 * The duration **must be between 1 and 600 minutes inclusive**.
 * The note is optional.
-* If provided, `NOTE` must be at most **500 characters**.
 * Refer to [`apt` command parameters](#for-the-apt-command)
 
 <div markdown="span" class="alert alert-warning">:exclamation: **Caution:**
 If the patient already has an existing appointment, it will be 
 silently overwritten with no confirmation prompt. Check the 
 patient's current appointment before using this command.
-
-If the system has an overlapping appointment, it will not create an appointment, and display an error.
 </div>
 
 Examples:
@@ -323,7 +319,6 @@ Format: `exit`
 
 #### For the `add` and `edit` commands:
 
-<a name="name-params"></a>
 **Name (`n/`):**<br>
 Must be **1 to 100 characters** long and start and end with an alphanumeric character.
 DoctorWho currently accepts the following special characters in the patient's name:<br>
@@ -393,16 +388,6 @@ Examples of invalid values: `mc/Post--traumatic stress disorder` (consecutive hy
 The parser also conducts a case-sensitive duplicate check so, `mc/diabetes mc/diabetes` will create one `diabetes` medical condition, but `mc/diabetes mc/Diabetes` will create both `diabetes` and `Diabetes`.
 
 #### For the `apt` command:
-
-**Date and Time (`d/`):**<br>
-Must be in the format dd-MM-yyyy HH:mm. The system validates that the date actually exists (e.g., prevents 31-02-2026).
-Example of valid value: `d/12-03-2026 14:00`
-Example of invalid value: `d/2026-03-12 14:00` (wrong format), `d/12-03-2026` (missing time).
-
-**Duration(dur/):**<br>
-Must be a positive integer between **1 and 600** (inclusive), representing the length of the appointment in minutes.
-Example of valid value: `dur/30`, `dur/600`.
-Example of invalid value: `dur/0`, `dur/601`, `dur/one hour` (all wrong formats).
 
 **Note (`note/`):**<br>
 Is limited to 500 characters and can include any character that you can type on your keyboard, except the `/` character, we recommend replacing it with the `\` or `|` characters.
